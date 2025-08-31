@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Agriguide</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/authStyles.css')}}" />
+
+
+    <!-- <script>
+      function changeAction() {
+          // Get the form element by its ID
+          var form = document.getElementById("login-form");
+          
+          // Modify the form's action attribute with the desired address
+          //http://other_address:other_port
+
+          form.action = "/login_button";  // Change to your desired address and port
+      }
+  </script> -->
+
+  </head>
+  <body>
+    <div class="center">
+      <!-- HTML <img src="static/images/b2.png" alt="No Image" height="100%" width="100%"/> -->
+      <!-- FLASK PY WORKING...... -->
+      <img src="{{ url_for('static', filename='logo.png')}}" alt="No  Image"  width="200px" class="rounded mx-auto d-block"/>
+      <h3>LOGIN</h3> 
+
+      <form method="POST" action="/login_button">
+        
+        <div class="txt_field">
+          <input type="text" name="username" required autocomplete="off" >
+          <label>Username</label>
+        </div>
+        <div class="txt_field">
+          <input type="password" name="password" required autocomplete="off" >
+          <span></span>
+          <label>Password</label>
+        </div>
+        <label>Role:</label>
+        <div class="form-check">
+          <label class="form-check-label" >
+          <input class="form-check-input" name="role" type="radio" name="admin" id="admin" value="admin" required/>
+           Admin
+          </label>
+
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input" name="role" type="radio" name="student" id="student" value="student" required />
+            Farmer
+          </label>
+
+        </div>
+          
+        <br>
+        <br>
+        <div class="pass" href="#" >Forgot Password?</div>
+          
+        <!-- <input type="submit" value="btn_click" name="click"> -->
+
+        <!-- <button type="submit" name="click" value="btn_click" >SIGN UP</button> 
+        href="{{url_for('signup') }}"
+      
+        // In HTML
+
+        for BUTTONS we need action='/add_button'
+        .
+        but for a href LINKS we don't need action='' in form
+
+        // In Python
+
+        for BUTTONS we need methods=['POST']
+        .
+        but for LINKS we don't need  methods=['POST']
+
+      -->
+
+        <button  id="login_button" type="submit" name="click" value="btn_click">LOGIN</button>
+      </form>
+
+      <form>
+        <div class="signup_link">
+          Not a member? <a type="submit" href="/signup" >Signup</a>
+        </div>
+      </form>
+
+     <!-- <form method="POST" action="mic_button" >
+        <button type="submit" class="btn btn-light" name="click" value="btn_click">
+            <i class="bi bi-mic-fill" style="color:#000000;"></i>
+            <span>
+                mic
+            </span>
+        </button>
+    </form>
+
+    {% if recognized_text %}
+    <div>
+      <b><p><u style="color:red">Recognized Text: </u>{{ recognized_text }}</p></b>
+   </div> 
+
+    {% endif %}
+  </div> -->
+  </div>
+
+  </body>
+</html>

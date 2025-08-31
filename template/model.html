@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Agriguide </title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/style4.css')}}" />
+
+    <!-- Boxicons CDN Link -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'/>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+      <!-- <i class='bx bxl-c-plus-plus icon'></i> -->
+      <i class='bx bxl-leaf icon' ></i>
+        <div class="logo_name" href="/index">Agriguide</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <!-- <li>
+          <i class='bx bx-search' ></i>
+         <input type="text" placeholder="Search...">
+         <span class="tooltip">Search</span>
+      </li> -->
+      <li>
+        <a href="/">
+          <!-- <i class='bx bx-grid-alt'></i> -->
+          <i class='bx bxs-dashboard' ></i>
+          <span class="links_name">Dashboard</span>
+        </a>
+         <span class="tooltip" >Dashboard</span>
+      </li>
+      <li>
+        <a href="/weather">
+          <i class='bx bx-sun'></i>
+          <span class="links_name">Weather Forecast</span>
+        </a>
+        <span class="tooltip">Weather Forecast</span>
+      </li>
+      <li>
+        <a href="/crop">
+          <i class='bx bxs-florist'></i>
+          <!-- <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAWdJREFUSEvFlgESATEMReskOAluwklwEpyEm3AT+k1/p2ybZNuynTHGbLYvyf9pzdxEazYR1/0TvAhFPvD9SzBA+Kydc6vwffTQw1gwNtkmm9SoNAqMjE8h+xpY+o4ZfA0tagXyfRO4NxRwFQwD7HuVmeyz85KdJXM9FShG4uK1nwcpOCpariIYzoWZvhdhyBgxNR1Z+neLc5zTFjBkC4fjee2K50buALl/jc7GA29h8GuqZJJM/v07B071JbSHw6O+GpiBvRwe9S2BqSGqbdWUbYZU2C+uXKsBxqAjGO6Gg1sXJRPBmMm35f3IaPNsSWhQrXSA4Flpni0wxqAAeAXwjyXdxz3aPGgx6RK4pc3FSjVwS5vjDSRpUqo4nV2OlXRq8RyHlgM9cwmUwKm+jOF/KN5EdD+gJpg2x3ieA49xsxpbqpgXRXYG1V0NARr440Yx7GcOkcyFTcxmMRND4C//0Iu5TAZ+AWuqSR8OuY9lAAAAAElFTkSuQmCC"/> -->
+          <!-- <i class='bx bxs-leaf' ></i> -->
+          <span class="links_name">Crop Recommend</span>
+        </a>
+        <span class="tooltip">Crop Recommendation</span>
+      </li>
+
+      <li>
+       <a href="/model">
+        <i class='bx bxs-bar-chart-alt-2' ></i>
+         <span class="links_name">Deep Learning Model</span>
+       </a>
+       <span class="tooltip">DL Model</span>
+     </li>
+    
+     
+     <li class="profile">
+      <div class="profile-details">
+        <img src="{{ url_for('static', filename='profile.jpg')}}" alt="profileImg">
+        <div class="name_job">
+          <div class="name">LIKULEASH</div>
+        </div>
+        <a href="/">
+         <!-- <span class="log_out"></span> -->
+        <!-- <i class='bx bx-log-out' id="log_out" ></i> -->
+        <i class='bx bx-log-out'></i>
+       </a>
+      </div>
+  </li>
+    </ul>
+  </div>
+  <section class="home-section">
+      <div class="text">Agriguide Dashboard</div>
+      
+      <div class="container mx-auto py-10">
+        <!-- MODEL CONTENT -->
+        <div class="container">
+          <h1>Crop Recommendation Analysis</h1>
+          
+          <div class="card-container">
+              <!-- Feature Importance Card -->
+              <div class="card">
+                  <div class="card-header">Feature Importance</div>
+                  <div class="card-body">
+                      <img src="{{url_for('static',filename='Figure_1.png')}}" alt="Feature Importance Chart" class="card-img">
+                  </div>
+              </div>
+              
+              <!-- Confusion Matrix Card -->
+              <div class="card">
+                  <div class="card-header">Confusion Matrix</div>
+                  <div class="card-body">
+                      <img src="{{url_for('static',filename='Figure_2.png')}}" alt="Confusion Matrix" class="card-img">
+                  </div>
+              </div>
+          </div>
+          <!-- Recommendations Section -->
+          
+      </div>
+    </div>
+      
+  </section>
+  
+  
+  <script>
+  let sidebar = document.querySelector(".sidebar");
+  let closeBtn = document.querySelector("#btn");
+  let searchBtn = document.querySelector(".bx-search");
+  closeBtn.addEventListener("click", ()=>{
+    sidebar.classList.toggle("open");
+    menuBtnChange();//calling the function(optional)
+  });
+  searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+    sidebar.classList.toggle("open");
+    menuBtnChange(); //calling the function(optional)
+  });
+  // following are the code to change sidebar button(optional)
+  function menuBtnChange() {
+   if(sidebar.classList.contains("open")){
+     closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+   }else {
+     closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+   }
+  }
+  </script>
+</body>
+</html>
+
+<!-- <div class="recommendations">
+              <div class="recommendation-header">Crop Recommendations</div>
+              <div class="top-recommendation">
+                  Top Recommendation: Rice (92.5%)
+              </div>
+              <ul class="recommendation-list">
+                  <li class="recommendation-item">
+                      <span class="crop-name">Rice</span>
+                      <div>
+                          <span class="probability">92.5%</span>
+                          <span class="suitability high">High</span>
+                      </div>
+                  </li>
+                  <li class="recommendation-item">
+                      <span class="crop-name">Wheat</span>
+                      <div>
+                          <span class="probability">85.2%</span>
+                          <span class="suitability high">High</span>
+                      </div>
+                  </li>
+                  <li class="recommendation-item">
+                      <span class="crop-name">Maize</span>
+                      <div>
+                          <span class="probability">78.9%</span>
+                          <span class="suitability high">High</span>
+                      </div>
+                  </li>
+                  <li class="recommendation-item">
+                      <span class="crop-name">Soybean</span>
+                      <div>
+                          <span class="probability">65.3%</span>
+                          <span class="suitability medium">Medium</span>
+                      </div>
+                  </li>
+                  <li class="recommendation-item">
+                      <span class="crop-name">Cotton</span>
+                      <div>
+                          <span class="probability">58.7%</span>
+                          <span class="suitability medium">Medium</span>
+                      </div>
+                  </li>
+              </ul>
+          </div> -->
+
+          <!--  <li>
+       <a href="#">
+         <i class='bx bx-folder' ></i>
+         <span class="links_name">File Manager</span>
+       </a>
+       <span class="tooltip">Files</span>
+     </li>
+     <li>
+       <a href="#">
+         <i class='bx bx-cart-alt' ></i>
+         <span class="links_name">Order</span>
+       </a>
+       <span class="tooltip">Order</span>
+     </li>
+     <li>
+       <a href="#">
+         <i class='bx bx-heart' ></i>
+         <span class="links_name">Saved</span>
+       </a>
+       <span class="tooltip">Saved</span>
+     </li>
+     <li>
+       <a href="#">
+         <i class='bx bx-cog' ></i>
+         <span class="links_name">Setting</span>
+       </a>
+       <span class="tooltip">Setting</span>
+     </li> 
+      <li>
+       <a href="/disease">
+        <i class='bx bxs-virus'></i>
+         <span class="links_name">Disease Predictor</span>
+       </a>
+       <span class="tooltip">Disease Predictor</span>
+     </li>--> 

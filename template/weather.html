@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Agriguide </title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/style1.css')}}" />
+
+    <!-- Boxicons CDN Link -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+      <!-- <i class='bx bxl-c-plus-plus icon'></i> -->
+      <i class='bx bxl-leaf icon' ></i>
+        <div class="logo_name" href="/index">Agriguide</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="/">
+          <!-- <i class='bx bx-grid-alt'></i> -->
+          <i class='bx bxs-dashboard' ></i>
+          <span class="links_name">Dashboard</span>
+        </a>
+         <span class="tooltip" >Dashboard</span>
+      </li>
+      <li>
+        <a href="/weather">
+          <i class='bx bx-sun'></i>
+          <span class="links_name">Weather Forecast</span>
+        </a>
+        <span class="tooltip">Weather Forecast</span>
+      </li>
+      <li>
+        <a href="/crop">
+            <i class='bx bxs-florist'></i>
+          <span class="links_name">Crop Recommend</span>
+        </a>
+        <span class="tooltip">Crop Recommendation</span>
+      </li>
+      <li>
+       <a href="/model">
+        <i class='bx bxs-bar-chart-alt-2' ></i>
+         <span class="links_name">Deep Learning Model</span>
+       </a>
+       <span class="tooltip">DL Model</span>
+     </li>
+
+     <li class="profile">
+        <div class="profile-details">
+          <img src="{{ url_for('static', filename='profile.jpg')}}" alt="profileImg">
+          <div class="name_job">
+            <div class="name">LIKULEASH</div>
+          </div>
+          <a href="/">
+           <!-- <span class="log_out"></span> -->
+          <!-- <i class='bx bx-log-out' id="log_out" ></i> -->
+          <i class='bx bx-log-out'></i>
+         </a>
+        </div>
+    </li>
+    </ul>
+  </div>
+
+  <section class="home-section">
+      <div class="text">Agriguide</div>
+      <div class="container mx-auto py-10">
+        <!-- Weather Code -->
+        <div class="dashboard-header text-center">
+          <h1>Weather Dashboard</h1>
+          <p class="text-muted">Get detailed weather information for any city</p>
+      </div>
+
+       <div class="search-container">
+        <form method="POST" class="justify-content-center">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="input-group mb-12">
+                        <input type="text" name="city" class="form-control form-control-lg" placeholder="Enter city name" aria-label="City name">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-search"></i> Search</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-outline-primary btn-block" id="get-location-btn">
+                        <i class="fas fa-location-arrow"></i> Use Current Location
+                    </button>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+    
+      {% if weather_data %}
+          {% if weather_data.error %}
+              <div class="alert alert-danger text-center">
+                {{ weather_data.error }}
+              </div>
+          {% else %}
+              <!-- Main Weather Card -->
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="card main-card text-center">
+                          <div class="card-body">
+                              <h3 class="city-name">{{ weather_data.name }}, <span class="country-name">{{ weather_data.sys.country }}</span></h3>
+                              <div class="weather-icon">
+                                  {% if weather_data.weather[0].main == 'Clear' %}
+                                      <i class="fas fa-sun"></i>
+                                  {% elif weather_data.weather[0].main == 'Clouds' %}
+                                      <i class="fas fa-cloud"></i>
+                                  {% elif weather_data.weather[0].main == 'Rain' %}
+                                      <i class="fas fa-cloud-rain"></i>
+                                  {% elif weather_data.weather[0].main == 'Snow' %}
+                                      <i class="fas fa-snowflake"></i>
+                                  {% elif weather_data.weather[0].main == 'Thunderstorm' %}
+                                      <i class="fas fa-bolt"></i>
+                                  {% else %}
+                                      <i class="fas fa-cloud-sun"></i>
+                                  {% endif %}
+                              </div>
+                              <div class="temp-display">{{ weather_data.main.temp }}°C</div>
+                              <div class="weather-desc">
+                                  {{ weather_data.weather[0].description }}
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+  
+              <!-- Temperature Details Row -->
+              <div class="row mt-4">
+                  <div class="col-md-4">
+                      <div class="card weather-card">
+                          <div class="card-header">
+                              <i class="fas fa-temperature-high mr-2"></i> Temperature
+                          </div>
+                          <div class="card-body text-center">
+                              <div class="detail-icon">
+                                  <i class="fas fa-thermometer-half"></i>
+                              </div>
+                              <div class="detail-value">{{ weather_data.main.temp }}°C</div>
+                              <div class="detail-label">Current</div>
+                              <hr>
+                              <div class="row">
+                                  <div class="col-6">
+                                      <div class="detail-value">{{ weather_data.main.temp_max }}°C</div>
+                                      <div class="detail-label">Max</div>
+                                  </div>
+                                  <div class="col-6">
+                                      <div class="detail-value">{{ weather_data.main.temp_min }}°C</div>
+                                      <div class="detail-label">Min</div>
+                                  </div>
+                              </div>
+                              <div class="chart-container mt-3">
+                                  <canvas id="tempChart"></canvas>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="col-md-4">
+                      <div class="card weather-card">
+                          <div class="card-header">
+                              <i class="fas fa-tint mr-2"></i> Humidity & Pressure
+                          </div>
+                          <div class="card-body text-center">
+                              <div class="row">
+                                  <div class="col-6">
+                                      <div class="detail-icon">
+                                          <i class="fas fa-tint"></i>
+                                      </div>
+                                      <div class="detail-value">{{ weather_data.main.humidity }}%</div>
+                                      <div class="detail-label">Humidity</div>
+                                  </div>
+                                  <div class="col-6">
+                                      <div class="detail-icon">
+                                          <i class="fas fa-tachometer-alt"></i>
+                                      </div>
+                                      <div class="detail-value">{{ weather_data.main.pressure }} hPa</div>
+                                      <div class="detail-label">Pressure</div>
+                                  </div>
+                              </div>
+                              <div class="chart-container mt-3">
+                                  <canvas id="humidityChart"></canvas>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="col-md-4">
+                      <div class="card weather-card">
+                          <div class="card-header">
+                              <i class="fas fa-wind mr-2"></i> Wind
+                          </div>
+                          <div class="card-body text-center">
+                              <div class="detail-icon">
+                                  <i class="fas fa-wind"></i>
+                              </div>
+                              <div class="detail-value">{{ weather_data.wind.speed }} m/s</div>
+                              <div class="detail-label">Speed</div>
+                              <hr>
+                              <div class="detail-value">
+                                  {% if weather_data.wind.deg %}
+                                      {{ weather_data.wind.deg }}°
+                                  {% else %}
+                                      N/A
+                                  {% endif %}
+                              </div>
+                              <div class="detail-label">Direction</div>
+                              <div class="chart-container mt-3">
+                                  <canvas id="windChart"></canvas>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+  
+              <!-- Sun & Additional Info Row -->
+              <div class="row mt-3">
+                  <div class="col-md-6">
+                      <div class="card weather-card sun-card">
+                          <div class="card-header">
+                              <i class="fas fa-sun mr-2"></i> Sun Times
+                          </div>
+                          <div class="card-body">
+                              <div class="row text-center">
+                                  <div class="col-6">
+                                      <div class="sun-icon">
+                                          <i class="fas fa-sunrise"></i>
+                                      </div>
+                                      <div class="time-display" id="sunrise-time">{{ weather_data.sys.sunrise }}</div>
+                                      <div class="detail-label">Sunrise</div>
+                                  </div>
+                                  <div class="col-6">
+                                      <div class="sun-icon">
+                                          <i class="fas fa-sunset"></i>
+                                      </div>
+                                      <div class="time-display" id="sunset-time">{{ weather_data.sys.sunset }}</div>
+                                      <div class="detail-label">Sunset</div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                      <div class="card weather-card">
+                          <div class="card-header">
+                              <i class="fas fa-info-circle mr-2"></i> Additional Info
+                          </div>
+                          <div class="card-body">
+                              <div class="row text-center">
+                                  <div class="col-6">
+                                      <div class="detail-icon">
+                                          <i class="fas fa-temperature-low"></i>
+                                      </div>
+                                      <div class="detail-value">{{ weather_data.main.feels_like }}°C</div>
+                                      <div class="detail-label">Feels Like</div>
+                                  </div>
+                                  <div class="col-6">
+                                      <div class="detail-icon">
+                                          <i class="fas fa-eye"></i>
+                                      </div>
+                                      <div class="detail-value">
+                                          {% if weather_data.visibility %}
+                                              {{ (weather_data.visibility/1000)|round(1) }} km
+                                          {% else %}
+                                              N/A
+                                          {% endif %}
+                                      </div>
+                                      <div class="detail-label">Visibility</div>
+                                  </div>
+                              </div>
+                              <hr>
+                              <div class="row text-center">
+                                  <div class="col-6">
+                                      <div class="detail-icon">
+                                          <i class="fas fa-cloud"></i>
+                                      </div>
+                                      <div class="detail-value">
+                                          {% if weather_data.clouds %}
+                                              {{ weather_data.clouds.all }}%
+                                          {% else %}
+                                              N/A
+                                          {% endif %}
+                                      </div>
+                                      <div class="detail-label">Cloudiness</div>
+                                  </div>
+                                  <div class="col-6">
+                                      <div class="detail-icon">
+                                          <i class="fas fa-calendar-day"></i>
+                                      </div>
+                                      <div class="detail-value" id="current-time"></div>
+                                      <div class="detail-label">Local Time</div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+      </div>
+  </section>
+            
+<script>
+    
+    // API INTEGRATION BLOCK 1
+  // Convert sunrise/sunset times
+  function convertToLocalTime(unixTimestamp) {
+                    const date = new Date(unixTimestamp * 1000);
+                    return date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                }
+
+                const sunriseUnix = document.getElementById('sunrise-time').innerText;
+                const sunsetUnix = document.getElementById('sunset-time').innerText;
+                document.getElementById('sunrise-time').innerText = convertToLocalTime(sunriseUnix);
+                document.getElementById('sunset-time').innerText = convertToLocalTime(sunsetUnix);
+                
+                // Display current local time
+                function updateCurrentTime() {
+                    const now = new Date();
+                    document.getElementById('current-time').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                }
+                updateCurrentTime();
+                setInterval(updateCurrentTime, 1000);
+
+                // Temperature Chart
+                const tempCtx = document.getElementById('tempChart').getContext('2d');
+                const tempChart = new Chart(tempCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Min', 'Current', 'Max'],
+                        datasets: [{
+                            label: 'Temperature (°C)',
+                            data: [
+                                {{ weather_data.main.temp_min }},
+                                {{ weather_data.main.temp }},
+                                {{ weather_data.main.temp_max }}
+                            ],
+                            backgroundColor: 'rgba(110, 142, 251, 0.2)',
+                            borderColor: 'rgba(110, 142, 251, 1)',
+                            borderWidth: 2,
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: false
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+
+                // Humidity Chart
+                const humidityCtx = document.getElementById('humidityChart').getContext('2d');
+                const humidityChart = new Chart(humidityCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Humidity', 'Remaining'],
+                        datasets: [{
+                            data: [
+                                {{ weather_data.main.humidity }},
+                                100 - {{ weather_data.main.humidity }}
+                            ],
+                            backgroundColor: [
+                                'rgba(110, 142, 251, 0.8)',
+                                'rgba(200, 200, 200, 0.2)'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+
+                // Wind Chart
+                const windCtx = document.getElementById('windChart').getContext('2d');
+                const windChart = new Chart(windCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
+                        datasets: [{
+                            label: 'Wind Direction',
+                            data: [0, 0, 0, 0, 0, 0, 0, 0],
+                            backgroundColor: 'rgba(110, 142, 251, 0.2)',
+                            borderColor: 'rgba(110, 142, 251, 1)',
+                            pointBackgroundColor: 'rgba(110, 142, 251, 1)',
+                            pointRadius: 4,
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                angleLines: {
+                                    display: true
+                                },
+                                suggestedMin: 0,
+                                suggestedMax: 1,
+                                ticks: {
+                                    display: false
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+
+                // Set wind direction if available
+                {% if weather_data.wind.deg %}
+                    const windDeg = {{ weather_data.wind.deg }};
+                    const windIndex = Math.round(windDeg / 45) % 8;
+                    const windData = [0, 0, 0, 0, 0, 0, 0, 0];
+                    windData[windIndex] = 1;
+                    windChart.data.datasets[0].data = windData;
+                    windChart.update();
+                {% endif %}
+
+              // GPS LOCATION
+// Get current location button functionality
+    document.getElementById('get-location-btn').addEventListener('click', function() {
+            if (navigator.geolocation) {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Detecting...';
+                this.disabled = true;
+            
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    document.getElementById('latitude-input').value = position.coords.latitude.toFixed(4);
+                    document.getElementById('longitude-input').value = position.coords.longitude.toFixed(4);
+                    
+                    const btn = document.getElementById('get-location-btn');
+                    btn.innerHTML = '<i class="fas fa-check-circle"></i> Location Found';
+                    btn.classList.remove('btn-outline-primary');
+                    btn.classList.add('btn-outline-success');
+                    
+                    setTimeout(function() {
+                        btn.innerHTML = '<i class="fas fa-location-arrow"></i> Use Current Location';
+                        btn.classList.remove('btn-outline-success');
+                        btn.classList.add('btn-outline-primary');
+                        btn.disabled = false;
+                    }, 2000);
+                },
+                function(error) {
+                    const btn = document.getElementById('get-location-btn');
+                    btn.innerHTML = '<i class="fas fa-exclamation-circle"></i> Error';
+                    btn.classList.remove('btn-outline-primary');
+                    btn.classList.add('btn-outline-danger');
+                    
+                    setTimeout(function() {
+                        btn.innerHTML = '<i class="fas fa-location-arrow"></i> Use Current Location';
+                        btn.classList.remove('btn-outline-danger');
+                        btn.classList.add('btn-outline-primary');
+                        btn.disabled = false;
+                    }, 2000);
+                    
+                    alert('Error getting location: ' + error.message);
+                },
+                { timeout: 10000 }
+            );
+        } else {
+            alert('Geolocation is not supported by your browser');
+        }
+    });
+    
+// Make sure either city or coordinates are provided
+document.querySelector('form').addEventListener('submit', function(e) {
+        const city = document.querySelector('input[name="city"]').value;
+        const lat = document.querySelector('input[name="lat"]').value;
+        const lon = document.querySelector('input[name="lon"]').value;
+        
+        if (!city && (!lat || !lon)) {
+            e.preventDefault();
+            alert('Please enter either a city name or both latitude and longitude');
+        }
+        });
+              // SIDEBAR ANIMATION BLOCK 2
+
+
+    let sidebar = document.querySelector(".sidebar");
+    let closeBtn = document.querySelector("#btn");
+  let searchBtn = document.querySelector(".bx-search");
+  closeBtn.addEventListener("click", ()=>{
+    sidebar.classList.toggle("open");
+    menuBtnChange();//calling the function(optional)
+  });
+  searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search icon
+    sidebar.classList.toggle("open");
+    menuBtnChange(); //calling the function(optional)
+  });
+  // following are the code to change sidebar button(optional)
+  function menuBtnChange() {
+   if(sidebar.classList.contains("open")){
+     closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+   }else {
+     closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+   }
+
+  }
+
+    </script>
+          {% endif %}
+      {% endif %}
+</body>
+</html>
+
+
+
+<!--     
+        
+
+     
+       
+    
+                <div class="row">
+                <!--
+                <div class="col-md-4">
+                    <div class="input-group mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Latitude</span>
+                        </div>
+                        <input type="number" step="any" name="lat" class="form-control" placeholder="e.g. 40.7128" id="latitude-input">
+                    </div>
+                </div>
+                 <div class="col-md-4">
+                    <div class="input-group mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Longitude</span>
+                        </div>
+                        <input type="number" step="any" name="lon" class="form-control" placeholder="e.g. -74.0060" id="longitude-input">
+                        <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-search"></i></button>
+                    </div>
+                    
+                </div>
+                
+                </div>
+                
+                
+            <div class="text-center mt-2">
+                <small class="text-muted">Search by city name or coordinates</small>
+            </div>-->

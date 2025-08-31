@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> TITLE </title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/style2.css')}}" />
+
+    <!-- Boxicons CDN Link -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css'/>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+      <!-- <i class='bx bxl-c-plus-plus icon'></i> -->
+      <i class='bx bxl-leaf icon' ></i> 
+        <div class="logo_name" href="/index">Agriguide</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <!-- <li>
+          <i class='bx bx-search' ></i>
+         <input type="text" placeholder="Search...">
+         <span class="tooltip">Search</span>
+      </li> -->
+      <li>
+        <a href="/">
+          <!-- <i class='bx bx-grid-alt'></i> -->
+          <i class='bx bxs-dashboard' ></i>
+          <span class="links_name">Dashboard</span>
+        </a>
+         <span class="tooltip" >Dashboard</span>
+      </li>
+      <li>
+        <a href="/weather">
+          <i class='bx bx-sun'></i>
+          <span class="links_name">Weather Forecast</span>
+        </a>
+        <span class="tooltip">Weather Forecast</span>
+      </li>
+      <li>
+        <a href="/crop" method="POST" >
+          <i class='bx bxs-florist'></i>
+          
+          <!-- <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAWdJREFUSEvFlgESATEMReskOAluwklwEpyEm3AT+k1/p2ybZNuynTHGbLYvyf9pzdxEazYR1/0TvAhFPvD9SzBA+Kydc6vwffTQw1gwNtkmm9SoNAqMjE8h+xpY+o4ZfA0tagXyfRO4NxRwFQwD7HuVmeyz85KdJXM9FShG4uK1nwcpOCpariIYzoWZvhdhyBgxNR1Z+neLc5zTFjBkC4fjee2K50buALl/jc7GA29h8GuqZJJM/v07B071JbSHw6O+GpiBvRwe9S2BqSGqbdWUbYZU2C+uXKsBxqAjGO6Gg1sXJRPBmMm35f3IaPNsSWhQrXSA4Flpni0wxqAAeAXwjyXdxz3aPGgx6RK4pc3FSjVwS5vjDSRpUqo4nV2OlXRq8RyHlgM9cwmUwKm+jOF/KN5EdD+gJpg2x3ieA49xsxpbqpgXRXYG1V0NARr440Yx7GcOkcyFTcxmMRND4C//0Iu5TAZ+AWuqSR8OuY9lAAAAAElFTkSuQmCC"/> -->
+          <!-- <i class='bx bxs-leaf' ></i> -->
+          <span class="links_name">Crop Recommend</span>
+        </a>
+        <span class="tooltip">Crop Recommendation</span>
+      </li>
+
+      <li>
+       <a href="/model">
+        <i class='bx bxs-bar-chart-alt-2' ></i>
+         <span class="links_name">Deep Learning Model</span>
+       </a>
+       <span class="tooltip">DL Model</span>
+     </li>
+     
+
+     <!-- <li>
+       <a href="#">
+         <i class='bx bx-folder' ></i>
+         <span class="links_name">File Manager</span>
+       </a>
+       <span class="tooltip">Files</span>
+     </li>
+     <li>
+       <a href="#">
+         <i class='bx bx-cart-alt' ></i>
+         <span class="links_name">Order</span>
+       </a>
+       <span class="tooltip">Order</span>
+     </li>
+     <li>
+       <a href="#">
+         <i class='bx bx-heart' ></i>
+         <span class="links_name">Saved</span>
+       </a>
+       <span class="tooltip">Saved</span>
+     </li>
+     <li>
+       <a href="#">
+         <i class='bx bx-cog' ></i>
+         <span class="links_name">Setting</span>
+       </a>
+       <span class="tooltip">Setting</span>
+     </li> 
+     <li>
+       <a href="/disease">
+        <i class='bx bxs-virus'></i>
+         <span class="links_name">Disease Predictor</span>
+       </a>
+       <span class="tooltip">Disease Predictor</span>
+     </li>
+     -->
+     <li class="profile">
+      <div class="profile-details">
+        <img src="{{ url_for('static', filename='profile.jpg')}}" alt="profileImg">
+        <div class="name_job">
+          <div class="name">LIKULEASH</div>
+        </div>
+        <a href="/">
+         <!-- <span class="log_out"></span> -->
+        <!-- <i class='bx bx-log-out' id="log_out" ></i> -->
+        <i class='bx bx-log-out'></i>
+       </a>
+      </div>
+  </li>
+    </ul>
+  </div>
+
+
+  <section class="home-section">
+      <div class="text">Agriguide Dashboard</div>
+    
+      <div class="container mx-auto py-10">
+
+       <!-- CROP RECOMMENDATION FORM -->
+        
+       <h1>Agricultural Data Collection</h1>
+       <form action="/recommend" method="POST" >
+           <h2>Soil Nutrients</h2>
+           <div class="row">
+               <div class="col">
+                   <div class="form-group">
+                       <label for="n">Nitrogen level (mg/kg)</label>
+                       <input type="number" id="nitrogen" name="nitrogen" step="0.1" min="0" class="form-control" required>
+                   </div>
+               </div>
+               <div class="col">
+                   <div class="form-group">
+                       <label for="p">Phosphorus level (mg/kg)</label>
+                       <input type="number" id="phosphorus" name="phosphorus" step="0.1" class="form-control" min="0" required>
+                   </div>
+               </div>
+               <div class="col">
+                   <div class="form-group">
+                       <label for="k">Potassium level (mg/kg)</label>
+                       <input type="number" id="potassium" name="potassium" step="0.1" min="0" class="form-control" required>
+                   </div>
+               </div>
+               <div class="col">
+                <div class="form-group">
+                    <label for="wind-speed">pH value</label>
+                    <input type="number" id="ph" name="ph" min="0" max="14" step="0.1" class="form-control" required>
+                </div>
+            </div>
+           </div>
+           
+           <hr>
+           
+           <h2>Weather Parameters</h2>
+           <div class="row">
+               <div class="col">
+                   <div class="form-group">
+                       <label for="temperature">Temperature (°C)</label>
+                       <input type="number" id="temperature" name="temperature" step="0.1" required>
+                   </div>
+               </div>
+               <div class="col">
+                   <div class="form-group">
+                       <label for="humidity">Humidity (%)</label>
+                       <input type="number" id="humidity" name="humidity" min="0" max="100" step="0.1" required>
+                   </div>
+               </div>
+           </div>
+           
+           <div class="row">
+               <div class="col">
+                   <div class="form-group">
+                       <label for="rainfall">Rainfall (mm)</label>
+                       <input type="number" id="rainfall" name="rainfall" min="0" step="0.1" required>
+                   </div>
+               </div>
+
+               <div class="col">
+                   <div class="form-group">
+                       <label for="wind_speed">Wind Speed (km/h)</label>
+                       <input type="number" id="wind_speed" name="wind_speed" min="0" step="0.1" required>
+                   </div>
+               </div>
+           </div>
+           
+           <hr>
+           
+           <h2>Weather Conditions</h2>
+           <div class="row">
+               <div class="col">
+                   <div class="form-group">
+                       <label for="weather_condition">Weather Type</label>
+                       <select id="weather_condition" name="weather_condition" required>
+                           <option value="">-- Select weather type --</option>
+                           <option value="sunny">Sunny</option>
+                           <option value="cloudy">Cloudy</option>
+                           <option value="rainy">Rainy</option>
+                           <option value="snowy">Snowy</option>
+                           <option value="foggy">Foggy</option>
+                           <option value="stormy">Stormy</option> 
+                       </select>
+                   </div>
+               </div>
+               <div class="col">
+                   <div class="form-group">
+                       <label for="weather_sustainability"> Weather Sustainability</label>
+                       <select id="weather_sustainability" name="weather_sustainability" required>
+                           <option value="select-Sustainability">-- Select Sustainablity --</option>
+                           <option value="sustainable">Sustainable</option>
+                           <option value="moderate">Moderate</option>
+                           <option value="not sustainable">Not Sustainable</option>
+                       </select>
+                   </div>
+               </div>
+           </div> 
+           <button class="btn" type="submit" name="click" value="btn_click"> Submit Data</i></button>
+           <!-- <button type="submit" >Submit Data</button> -->
+       </form>
+      </div>
+  
+  </section>
+  
+  
+  <script>
+  let sidebar = document.querySelector(".sidebar");
+  let closeBtn = document.querySelector("#btn");
+  let searchBtn = document.querySelector(".bx-search");
+  closeBtn.addEventListener("click", ()=>{
+    sidebar.classList.toggle("open");
+    menuBtnChange();//calling the function(optional)
+  });
+  searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+    sidebar.classList.toggle("open");
+    menuBtnChange(); //calling the function(optional)
+  });
+  // following are the code to change sidebar button(optional)
+  function menuBtnChange() {
+   if(sidebar.classList.contains("open")){
+     closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+   }else {
+     closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+   }
+  }
+
+  // CROP RECOMMEND
+  document.getElementById('agricultureForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const formData = {
+                N: document.getElementById('n').value,
+                P: document.getElementById('p').value,
+                K: document.getElementById('k').value,
+                temperature: document.getElementById('temperature').value,
+                humidity: document.getElementById('humidity').value,
+                rainfall: document.getElementById('rainfall').value,
+                windSpeed: document.getElementById('wind-speed').value,
+                weather: document.getElementById('weather').value,
+                weatherCondition: document.getElementById('weather-condition').value,
+                weatherSustainability: document.getElementById('weather-sustainability').value
+            };
+            
+            // Here you can process the data (send to server, display, etc.)
+            console.log('Form submitted:', formData);
+            alert('Form submitted successfully!\nCheck console for data.');
+            
+            // To actually submit to a server, you would use fetch() or XMLHttpRequest
+            // Example:
+            // fetch('/submit-data', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(formData)
+            // })
+            // .then(response => response.json())
+            // .then(data => console.log('Success:', data))
+            // .catch(error => console.error('Error:', error));
+        });
+  </script>
+</body>
+</html>
+
+<!-- FUTURE VERSIONS -->
